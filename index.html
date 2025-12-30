@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta Tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pixel Palace Arcade Bar - Your premier destination for retro gaming, craft drinks, and arcade tournaments. Play classic games, enjoy neon vibes, and compete for high scores!">
+  <meta name="keywords" content="arcade bar, retro gaming, craft drinks, space invaders, tournaments, neon arcade">
+  <meta name="author" content="Pixel Palace Arcade">
+  
+  <!-- Open Graph Tags -->
+  <meta property="og:title" content="Pixel Palace Arcade Bar - Retro Gaming & Craft Drinks">
+  <meta property="og:description" content="Experience the ultimate arcade bar with classic games, craft cocktails, and weekly tournaments. Join us for retro gaming nights!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pixelpalacearcade.com">
+  <meta property="og:image" content="https://pixelpalacearcade.com/images/og-image.jpg">
+  
+  <!-- Title -->
+  <title>Pixel Palace Arcade Bar - Retro Gaming & Craft Drinks</title>
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
+  
+  <!-- Navigation -->
+  <nav class="main-nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Pixel Palace</a>
+      
+      <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="section-hero">
+    <div class="container text-center">
+      <h1 class="animate-float">Welcome to Pixel Palace</h1>
+      
+      <div style="display: flex; gap: var(--spacing-md); justify-content: center; flex-wrap: wrap; margin-top: var(--spacing-xl);">
+        <a href="games.html" class="btn btn-primary btn-large">Play Now</a>
+        <a href="menu.html" class="btn btn-secondary btn-large">View Menu</a>
+      </div>
+      
+      <div style="margin-top: var(--spacing-2xl);">
+        <p style="font-family: var(--font-heading); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--neon-green);">
+          🕹️ Now Open - Every Day 4PM-2AM
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="section" style="background: rgba(0, 0, 0, 0.3);">
+    <div class="container">
+      <h2 class="text-center mb-xl">Why Pixel Palace?</h2>
+      
+      <div class="grid grid-3">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">🎮 Classic Games</h3>
+          </div>
+          <div class="card-body">
+            <p>Play timeless arcade classics like Space Invaders, Pac-Man, and more. All games are free to play with entry!</p>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">🍹 Craft Cocktails</h3>
+          </div>
+          <div class="card-body">
+            <p>Enjoy our signature gaming-themed cocktails and craft beers. From "Pac-Man's Power Pellet" to "1UP Margarita"!</p>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">🏆 Weekly Tournaments</h3>
+          </div>
+          <div class="card-body">
+            <p>Compete for glory and prizes every week! Check out our tournaments and retro game nights.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- High Score Callout -->
+  <section class="section">
+    <div class="container">
+      <div class="card text-center" style="border-color: var(--neon-pink); max-width: 600px; margin: 0 auto;">
+        <h3 style="color: var(--neon-pink); text-shadow: var(--glow-pink);">Think You've Got Skills?</h3>
+        <p style="margin: var(--spacing-md) 0;">Challenge our Space Invaders high score and earn a spot on our Wall of Fame!</p>
+        <p style="font-size: 2rem; font-family: var(--font-heading); color: var(--neon-yellow); margin: var(--spacing-sm) 0;" id="currentHighScore">
+          Loading...
+        </p>
+        <a href="games.html" class="btn btn-primary">Start Playing</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-content">
+      <p class="footer-text">&copy; 2025 Pixel Palace Arcade Bar. All rights reserved.</p>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <p class="footer-text" style="margin-top: var(--spacing-md); font-size: 0.75rem;">
+        Drink responsibly. Must be 21+ to consume alcohol.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/storage.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/analytics.js"></script>
+  <script>
+    // Display current high score on home page
+    document.addEventListener('DOMContentLoaded', () => {
+      const highScoreEl = document.getElementById('currentHighScore');
+      if (highScoreEl && typeof StorageManager !== 'undefined') {
+        const highScore = StorageManager.getHighScore();
+        highScoreEl.textContent = highScore > 0 ? highScore.toLocaleString() : 'No Score Yet!';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta Tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore our menu of craft cocktails, arcade-themed drinks, craft beers, and gamer snacks at Pixel Palace Arcade Bar.">
+  <meta name="keywords" content="arcade bar menu, craft cocktails, gaming drinks, arcade food">
+  
+  <!-- Open Graph Tags -->
+  <meta property="og:title" content="Menu - Pixel Palace Arcade Bar">
+  <meta property="og:description" content="Check out our gaming-themed cocktails, craft beers, and delicious arcade snacks!">
+  <meta property="og:type" content="website">
+  
+  <!-- Title -->
+  <title>Menu - Pixel Palace Arcade Bar</title>
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .menu-filters {
+      display: flex;
+      justify-content: center;
+      gap: var(--spacing-sm);
+      flex-wrap: wrap;
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .filter-btn {
+      padding: var(--spacing-sm) var(--spacing-lg);
+      font-family: var(--font-heading);
+      text-transform: uppercase;
+      background: transparent;
+      border: 2px solid var(--neon-blue);
+      color: var(--neon-blue);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+    }
+
+    .filter-btn:hover {
+      box-shadow: var(--glow-blue);
+      transform: translateY(-2px);
+    }
+
+    .filter-btn.active {
+      background: var(--neon-pink);
+      border-color: var(--neon-pink);
+      color: var(--bg-dark);
+      box-shadow: var(--glow-pink);
+    }
+
+    .menu-section {
+      margin-bottom: var(--spacing-2xl);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: var(--spacing-lg);
+    }
+
+    .menu-item {
+      background: var(--bg-card);
+      border: 2px solid var(--neon-purple);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      backdrop-filter: blur(10px);
+      transition: all var(--transition-normal);
+    }
+
+    .menu-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(185, 103, 255, 0.4);
+      border-color: var(--neon-blue);
+    }
+
+    .menu-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--spacing-sm);
+      gap: var(--spacing-sm);
+    }
+
+    .menu-item-name {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      color: var(--neon-blue);
+      text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+      margin: 0;
+    }
+
+    .menu-item-price {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      color: var(--neon-yellow);
+      white-space: nowrap;
+    }
+
+    .menu-item-description {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .menu-item-badge {
+      display: inline-block;
+      margin-top: var(--spacing-xs);
+      padding: 2px 8px;
+      font-size: 0.75rem;
+      font-family: var(--font-heading);
+      text-transform: uppercase;
+      border-radius: var(--radius-sm);
+      letter-spacing: 0.05em;
+    }
+
+    .badge-popular {
+      background: rgba(255, 0, 110, 0.2);
+      border: 1px solid var(--neon-pink);
+      color: var(--neon-pink);
+    }
+
+    .badge-new {
+      background: rgba(5, 255, 161, 0.2);
+      border: 1px solid var(--neon-green);
+      color: var(--neon-green);
+    }
+
+    .badge-spicy {
+      background: rgba(255, 140, 66, 0.2);
+      border: 1px solid var(--neon-orange);
+      color: var(--neon-orange);
+    }
+
+    .menu-item.hidden {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- Navigation -->
+  <nav class="main-nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Pixel Palace</a>
+      
+      <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="section">
+    <div class="container">
+      <h1 class="text-center mb-md">Menu</h1>
+      <p class="text-center mb-xl" style="color: var(--text-secondary); font-size: 1.1rem;">
+        Level up your night with our gaming-themed drinks and arcade snacks!
+      </p>
+
+      <!-- Filters -->
+      <div class="menu-filters">
+        <button class="filter-btn active" data-filter="all">All Items</button>
+        <button class="filter-btn" data-filter="cocktails">Cocktails</button>
+        <button class="filter-btn" data-filter="beer">Beer & Wine</button>
+        <button class="filter-btn" data-filter="nonalcoholic">Non-Alcoholic</button>
+        <button class="filter-btn" data-filter="food">Food</button>
+      </div>
+
+      <!-- Menu Items Container -->
+      <div id="menuContainer"></div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-content">
+      <p class="footer-text">&copy; 2025 Pixel Palace Arcade Bar. All rights reserved.</p>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <p class="footer-text" style="margin-top: var(--spacing-md); font-size: 0.75rem;">
+        Drink responsibly. Must be 21+ to consume alcohol.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/storage.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/analytics.js"></script>
+  <script>
+    // Menu Data
+    const menuData = {
+      cocktails: [
+        {
+          name: "Pac-Man's Power Pellet",
+          price: 12,
+          description: "Vodka, blue curaçao, lemon juice, and a splash of sprite. Garnished with edible glitter.",
+          badges: ["popular"]
+        },
+        {
+          name: "1UP Margarita",
+          price: 11,
+          description: "Tequila, triple sec, fresh lime juice, and agave nectar with a salted rim.",
+          badges: ["popular"]
+        },
+        {
+          name: "Space Invader",
+          price: 13,
+          description: "Rum, coconut cream, pineapple juice, and a hint of lime with a neon green glow.",
+          badges: ["new"]
+        },
+        {
+          name: "Final Boss",
+          price: 14,
+          description: "Whiskey, ginger beer, bitters, and a dash of hot sauce. Not for beginners!",
+          badges: ["spicy"]
+        },
+        {
+          name: "Princess Peach Bellini",
+          price: 10,
+          description: "Prosecco and peach purée with a sugar rim and fresh peach garnish.",
+          badges: []
+        },
+        {
+          name: "Pixel Punch",
+          price: 11,
+          description: "Light rum, dark rum, tropical juices, and grenadine. Served in a retro arcade cup.",
+          badges: []
+        }
+      ],
+      beer: [
+        {
+          name: "8-Bit IPA",
+          price: 7,
+          description: "Local craft IPA with citrus and pine notes. 6.5% ABV.",
+          badges: ["popular"]
+        },
+        {
+          name: "Retro Lager",
+          price: 6,
+          description: "Crisp and refreshing pilsner-style lager. 4.8% ABV.",
+          badges: []
+        },
+        {
+          name: "Boss Battle Stout",
+          price: 8,
+          description: "Rich imperial stout with chocolate and coffee notes. 8.2% ABV.",
+          badges: []
+        },
+        {
+          name: "Pixel Palace Red",
+          price: 9,
+          description: "Smooth house red wine with berry notes.",
+          badges: []
+        },
+        {
+          name: "High Score Chardonnay",
+          price: 9,
+          description: "Crisp white wine with hints of apple and pear.",
+          badges: []
+        }
+      ],
+      nonalcoholic: [
+        {
+          name: "Health Potion",
+          price: 5,
+          description: "Strawberry lemonade with fresh mint and a splash of soda.",
+          badges: ["popular"]
+        },
+        {
+          name: "Mana Elixir",
+          price: 5,
+          description: "Blue raspberry Italian soda with whipped cream.",
+          badges: []
+        },
+        {
+          name: "Extra Life Energy",
+          price: 6,
+          description: "Fresh-squeezed orange juice, ginger, and honey with sparkling water.",
+          badges: ["new"]
+        },
+        {
+          name: "Fountain Soda",
+          price: 3,
+          description: "Coke, Diet Coke, Sprite, Root Beer, or Dr. Pepper.",
+          badges: []
+        }
+      ],
+      food: [
+        {
+          name: "Joystick Fries",
+          price: 8,
+          description: "Crispy seasoned fries served with chipotle aioli and cheese sauce.",
+          badges: ["popular"]
+        },
+        {
+          name: "Power-Up Nachos",
+          price: 12,
+          description: "Loaded nachos with cheese, jalapeños, sour cream, guacamole, and your choice of chicken or beef.",
+          badges: ["popular"]
+        },
+        {
+          name: "Boss Battle Wings",
+          price: 14,
+          description: "10 wings tossed in your choice of BBQ, buffalo, or honey sriracha sauce.",
+          badges: ["spicy"]
+        },
+        {
+          name: "Pixel Burger",
+          price: 13,
+          description: "8oz beef patty with cheddar, lettuce, tomato, pickles, and arcade sauce. Served with fries.",
+          badges: []
+        },
+        {
+          name: "Retro Pizza",
+          price: 10,
+          description: "Personal 10\" pizza with your choice of pepperoni, mushroom, or veggie toppings.",
+          badges: []
+        },
+        {
+          name: "Game Over Sliders",
+          price: 11,
+          description: "Three mini burgers with cheese and special sauce. Perfect for sharing!",
+          badges: []
+        },
+        {
+          name: "Continue Combo",
+          price: 9,
+          description: "Mozzarella sticks, onion rings, and jalapeño poppers with ranch and marinara.",
+          badges: []
+        },
+        {
+          name: "Coin-Op Quesadilla",
+          price: 10,
+          description: "Grilled chicken or veggie quesadilla with salsa, sour cream, and guac.",
+          badges: []
+        }
+      ]
+    };
+
+    // Menu rendering and filtering
+    (function() {
+      'use strict';
+
+      const menuContainer = document.getElementById('menuContainer');
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      let currentFilter = 'all';
+
+      // Render menu items
+      function renderMenu(filter = 'all') {
+        if (!menuContainer) return;
+
+        menuContainer.innerHTML = '';
+        
+        // Determine which categories to show
+        const categoriesToShow = filter === 'all' 
+          ? Object.keys(menuData)
+          : [filter];
+
+        categoriesToShow.forEach(category => {
+          const items = menuData[category];
+          if (!items || items.length === 0) return;
+
+          // Create section
+          const section = document.createElement('div');
+          section.className = 'menu-section';
+          section.dataset.category = category;
+
+          // Section title
+          const title = document.createElement('h2');
+          title.textContent = getCategoryTitle(category);
+          section.appendChild(title);
+
+          // Create grid
+          const grid = document.createElement('div');
+          grid.className = 'menu-grid';
+
+          // Add items
+          items.forEach(item => {
+            const itemEl = createMenuItem(item);
+            grid.appendChild(itemEl);
+          });
+
+          section.appendChild(grid);
+          menuContainer.appendChild(section);
+        });
+      }
+
+      // Create menu item element
+      function createMenuItem(item) {
+        const div = document.createElement('div');
+        div.className = 'menu-item';
+
+        // Header (name and price)
+        const header = document.createElement('div');
+        header.className = 'menu-item-header';
+
+        const name = document.createElement('h3');
+        name.className = 'menu-item-name';
+        name.textContent = item.name;
+
+        const price = document.createElement('div');
+        price.className = 'menu-item-price';
+        price.textContent = `$${item.price}`;
+
+        header.appendChild(name);
+        header.appendChild(price);
+        div.appendChild(header);
+
+        // Description
+        const description = document.createElement('p');
+        description.className = 'menu-item-description';
+        description.textContent = item.description;
+        div.appendChild(description);
+
+        // Badges
+        if (item.badges && item.badges.length > 0) {
+          const badgesContainer = document.createElement('div');
+          item.badges.forEach(badge => {
+            const badgeEl = document.createElement('span');
+            badgeEl.className = `menu-item-badge badge-${badge}`;
+            badgeEl.textContent = badge;
+            badgesContainer.appendChild(badgeEl);
+          });
+          div.appendChild(badgesContainer);
+        }
+
+        return div;
+      }
+
+      // Get friendly category title
+      function getCategoryTitle(category) {
+        const titles = {
+          cocktails: '🍹 Signature Cocktails',
+          beer: '🍺 Beer & Wine',
+          nonalcoholic: '🥤 Non-Alcoholic',
+          food: '🍔 Arcade Eats'
+        };
+        return titles[category] || category;
+      }
+
+      // Filter handling
+      filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const filter = btn.dataset.filter;
+          
+          // Update active state
+          filterButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          // Update filter
+          currentFilter = filter;
+          renderMenu(filter);
+
+          // Track filter usage
+          if (typeof window.trackEvent === 'function') {
+            window.trackEvent('menu_filter', { category: filter });
+          }
+        });
+      });
+
+      // Initial render
+      renderMenu('all');
+    })();
+  </script>
+</body>
+</html>

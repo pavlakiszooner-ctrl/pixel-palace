@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta Tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact Pixel Palace Arcade Bar. Get in touch for reservations, private events, or questions. Find our location and opening hours.">
+  <meta name="keywords" content="arcade bar contact, reservations, location, hours">
+  
+  <!-- Open Graph Tags -->
+  <meta property="og:title" content="Contact - Pixel Palace Arcade Bar">
+  <meta property="og:description" content="Get in touch with Pixel Palace for reservations, events, or inquiries!">
+  <meta property="og:type" content="website">
+  
+  <!-- Title -->
+  <title>Contact - Pixel Palace Arcade Bar</title>
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-xl);
+      margin-top: var(--spacing-xl);
+    }
+
+    .contact-form-section,
+    .contact-info-section {
+      background: var(--bg-card);
+      border: 2px solid var(--neon-purple);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-xl);
+      backdrop-filter: blur(10px);
+    }
+
+    .contact-form-section h2,
+    .contact-info-section h2 {
+      margin-top: 0;
+    }
+
+    .form-group {
+      margin-bottom: var(--spacing-md);
+    }
+
+    .form-label {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--neon-blue);
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .form-label .required {
+      color: var(--neon-pink);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: var(--spacing-sm);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      background: rgba(0, 0, 0, 0.5);
+      border: 2px solid var(--neon-blue);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      transition: all var(--transition-fast);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--neon-purple);
+      box-shadow: 0 0 15px rgba(185, 103, 255, 0.5);
+    }
+
+    .form-control.error {
+      border-color: var(--neon-pink);
+    }
+
+    .form-control::placeholder {
+      color: var(--text-muted);
+    }
+
+    .form-error {
+      display: block;
+      margin-top: var(--spacing-xs);
+      font-size: 0.875rem;
+      color: var(--neon-pink);
+      font-family: var(--font-heading);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 120px;
+      font-family: var(--font-body);
+    }
+
+    .form-success {
+      background: rgba(5, 255, 161, 0.1);
+      border: 2px solid var(--neon-green);
+      border-radius: var(--radius-md);
+      padding: var(--spacing-md);
+      color: var(--neon-green);
+      text-align: center;
+      margin-bottom: var(--spacing-md);
+      display: none;
+    }
+
+    .form-success.show {
+      display: block;
+    }
+
+    .info-item {
+      margin-bottom: var(--spacing-lg);
+      padding-bottom: var(--spacing-lg);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .info-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .info-item h3 {
+      font-size: 1.1rem;
+      margin-bottom: var(--spacing-sm);
+      color: var(--neon-blue);
+    }
+
+    .info-item p {
+      color: var(--text-secondary);
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .info-item a {
+      color: var(--neon-purple);
+    }
+
+    .hours-table {
+      width: 100%;
+      margin-top: var(--spacing-sm);
+    }
+
+    .hours-table tr {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--spacing-xs) 0;
+    }
+
+    .hours-table td:first-child {
+      font-family: var(--font-heading);
+      color: var(--neon-green);
+    }
+
+    .hours-table td:last-child {
+      color: var(--text-secondary);
+    }
+
+    .social-links {
+      display: flex;
+      gap: var(--spacing-md);
+      margin-top: var(--spacing-md);
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border: 2px solid var(--neon-blue);
+      border-radius: 50%;
+      font-size: 1.2rem;
+      transition: all var(--transition-fast);
+    }
+
+    .social-link:hover {
+      border-color: var(--neon-pink);
+      box-shadow: var(--glow-pink);
+      transform: translateY(-3px);
+    }
+
+    .map-section {
+      margin-top: var(--spacing-xl);
+    }
+
+    .map-section h2 {
+      margin-top: 0;
+      margin-bottom: var(--spacing-md);
+      color: var(--neon-green);
+      text-align: center;
+    }
+
+    .map-container {
+      position: relative;
+      width: 100%;
+      height: 450px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 2px solid var(--neon-blue);
+      box-shadow: 0 0 20px rgba(0, 225, 255, 0.3);
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      filter: brightness(0.9) contrast(1.1) saturate(0.8);
+    }
+
+    @media (max-width: 768px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .map-container {
+        height: 350px;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- Navigation -->
+  <nav class="main-nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Pixel Palace</a>
+      
+      <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="section">
+    <div class="container">
+      <h1 class="text-center mb-md">Get In Touch</h1>
+      <p class="text-center mb-xl" style="color: var(--text-secondary); font-size: 1.1rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+        Have questions? Want to book a private event? We'd love to hear from you!
+      </p>
+
+      <div class="contact-grid">
+        <!-- Contact Form -->
+        <div class="contact-form-section">
+          <h2>Send Us a Message</h2>
+          
+          <div class="form-success" id="formSuccess">
+            ✓ Message sent successfully! We'll get back to you within 24 hours.
+          </div>
+
+          <form id="contactForm" novalidate>
+            <div class="form-group">
+              <label for="name" class="form-label">
+                Name <span class="required">*</span>
+              </label>
+              <input 
+                type="text" 
+                id="name" 
+                name="name" 
+                class="form-control" 
+                placeholder="Your name"
+                required
+              >
+              <span class="form-error" id="nameError"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="email" class="form-label">
+                Email <span class="required">*</span>
+              </label>
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                class="form-control" 
+                placeholder="your@email.com"
+                required
+              >
+              <span class="form-error" id="emailError"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="phone" class="form-label">
+                Phone
+              </label>
+              <input 
+                type="tel" 
+                id="phone" 
+                name="phone" 
+                class="form-control" 
+                placeholder="(555) 123-4567"
+              >
+              <span class="form-error" id="phoneError"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="subject" class="form-label">
+                Subject <span class="required">*</span>
+              </label>
+              <select id="subject" name="subject" class="form-control" required>
+                <option value="">Select a subject...</option>
+                <option value="general">General Inquiry</option>
+                <option value="reservation">Reservation</option>
+                <option value="private-event">Private Event</option>
+                <option value="tournament">Tournament Info</option>
+                <option value="feedback">Feedback</option>
+                <option value="other">Other</option>
+              </select>
+              <span class="form-error" id="subjectError"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="message" class="form-label">
+                Message <span class="required">*</span>
+              </label>
+              <textarea 
+                id="message" 
+                name="message" 
+                class="form-control" 
+                placeholder="Tell us what's on your mind..."
+                required
+              ></textarea>
+              <span class="form-error" id="messageError"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+              Send Message
+            </button>
+          </form>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="contact-info-section">
+          <h2>Visit Us</h2>
+
+          <div class="info-item">
+            <h3>📍 Location</h3>
+            <p>
+              123 Arcade Avenue<br>
+              Downtown Gaming District<br>
+              Los Angeles, CA 90012
+            </p>
+          </div>
+
+          <div class="info-item">
+            <h3>🕐 Opening Hours</h3>
+            <table class="hours-table">
+              <tr>
+                <td>Monday - Thursday</td>
+                <td>4:00 PM - 12:00 AM</td>
+              </tr>
+              <tr>
+                <td>Friday</td>
+                <td>4:00 PM - 2:00 AM</td>
+              </tr>
+              <tr>
+                <td>Saturday</td>
+                <td>2:00 PM - 2:00 AM</td>
+              </tr>
+              <tr>
+                <td>Sunday</td>
+                <td>2:00 PM - 12:00 AM</td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="info-item">
+            <h3>📞 Contact</h3>
+            <p>
+              Phone: <a href="tel:+15551234567">(555) 123-4567</a><br>
+              Email: <a href="mailto:info@pixelpalacearcade.com">info@pixelpalacearcade.com</a>
+            </p>
+          </div>
+
+          <div class="info-item">
+            <h3>🌐 Follow Us</h3>
+            <div class="social-links">
+              <a href="#" class="social-link" aria-label="Facebook" title="Facebook">📘</a>
+              <a href="#" class="social-link" aria-label="Instagram" title="Instagram">📷</a>
+              <a href="#" class="social-link" aria-label="Twitter" title="Twitter">🐦</a>
+              <a href="#" class="social-link" aria-label="TikTok" title="TikTok">🎵</a>
+            </div>
+          </div>
+
+          <div class="info-item" style="background: rgba(255, 0, 110, 0.1); border: 1px solid var(--neon-pink); border-radius: var(--radius-md); padding: var(--spacing-md); margin-top: var(--spacing-lg);">
+            <p style="margin: 0; font-size: 0.9rem;">
+              💡 <strong>Pro Tip:</strong> Book ahead for weekend tournaments and special events to guarantee your spot!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Map Section -->
+      <div class="map-section">
+        <h2>🗺️ Find Us on the Map</h2>
+        <div class="map-container">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3305.419928373784!2d-118.24565892347437!3d34.05223561826247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c7b1e3c9c9c9%3A0x1234567890abcdef!2s123%20Arcade%20Avenue%2C%20Los%20Angeles%2C%20CA%2090012!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Pixel Palace Arcade Bar Location Map"
+            aria-label="Map showing the location of Pixel Palace Arcade Bar at 123 Arcade Avenue, Los Angeles">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-content">
+      <p class="footer-text">&copy; 2025 Pixel Palace Arcade Bar. All rights reserved.</p>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/storage.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/analytics.js"></script>
+  <script>
+    // Contact form validation and handling
+    (function() {
+      'use strict';
+
+      const form = document.getElementById('contactForm');
+      const formSuccess = document.getElementById('formSuccess');
+
+      // Validation rules
+      const validationRules = {
+        name: {
+          required: true,
+          minLength: 2,
+          message: 'Please enter your name (at least 2 characters)'
+        },
+        email: {
+          required: true,
+          pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+          message: 'Please enter a valid email address'
+        },
+        phone: {
+          required: false,
+          pattern: /^[\d\s\-\(\)]+$/,
+          message: 'Please enter a valid phone number'
+        },
+        subject: {
+          required: true,
+          message: 'Please select a subject'
+        },
+        message: {
+          required: true,
+          minLength: 10,
+          message: 'Please enter a message (at least 10 characters)'
+        }
+      };
+
+      // Validate field
+      function validateField(fieldName, value) {
+        const rules = validationRules[fieldName];
+        if (!rules) return { valid: true };
+
+        // Required check
+        if (rules.required && !value.trim()) {
+          return { valid: false, message: rules.message };
+        }
+
+        // Skip other validations if field is optional and empty
+        if (!rules.required && !value.trim()) {
+          return { valid: true };
+        }
+
+        // Min length check
+        if (rules.minLength && value.trim().length < rules.minLength) {
+          return { valid: false, message: rules.message };
+        }
+
+        // Pattern check
+        if (rules.pattern && !rules.pattern.test(value.trim())) {
+          return { valid: false, message: rules.message };
+        }
+
+        return { valid: true };
+      }
+
+      // Show error
+      function showError(fieldName, message) {
+        const field = document.getElementById(fieldName);
+        const errorEl = document.getElementById(`${fieldName}Error`);
+        
+        if (field) field.classList.add('error');
+        if (errorEl) errorEl.textContent = message;
+      }
+
+      // Clear error
+      function clearError(fieldName) {
+        const field = document.getElementById(fieldName);
+        const errorEl = document.getElementById(`${fieldName}Error`);
+        
+        if (field) field.classList.remove('error');
+        if (errorEl) errorEl.textContent = '';
+      }
+
+      // Validate all fields
+      function validateForm() {
+        let isValid = true;
+        const formData = new FormData(form);
+
+        Object.keys(validationRules).forEach(fieldName => {
+          const value = formData.get(fieldName) || '';
+          const validation = validateField(fieldName, value);
+
+          if (!validation.valid) {
+            showError(fieldName, validation.message);
+            isValid = false;
+          } else {
+            clearError(fieldName);
+          }
+        });
+
+        return isValid;
+      }
+
+      // Real-time validation
+      Object.keys(validationRules).forEach(fieldName => {
+        const field = document.getElementById(fieldName);
+        if (!field) return;
+
+        field.addEventListener('blur', () => {
+          const validation = validateField(fieldName, field.value);
+          if (!validation.valid) {
+            showError(fieldName, validation.message);
+          } else {
+            clearError(fieldName);
+          }
+        });
+
+        field.addEventListener('input', () => {
+          // Clear error on input if field was previously invalid
+          const errorEl = document.getElementById(`${fieldName}Error`);
+          if (errorEl && errorEl.textContent) {
+            clearError(fieldName);
+          }
+        });
+      });
+
+      // Form submission
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Validate form
+        if (!validateForm()) {
+          // Scroll to first error
+          const firstError = form.querySelector('.form-control.error');
+          if (firstError) {
+            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            firstError.focus();
+          }
+          return;
+        }
+
+        // Get form data
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        // In production, this would send to a server
+        console.log('Form submitted:', data);
+
+        // Track form submission
+        if (typeof window.trackEvent === 'function') {
+          window.trackEvent('contact_form_submit', {
+            subject: data.subject
+          });
+        }
+
+        // Show success message
+        formSuccess.classList.add('show');
+        form.reset();
+
+        // Scroll to success message
+        formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        // Hide success message after 5 seconds
+        setTimeout(() => {
+          formSuccess.classList.remove('show');
+        }, 5000);
+      });
+    })();
+  </script>
+</body>
+</html>

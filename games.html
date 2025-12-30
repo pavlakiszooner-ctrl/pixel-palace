@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta Tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Play Space Invaders and other classic arcade games at Pixel Palace. Test your skills and climb the leaderboard!">
+  <meta name="keywords" content="space invaders, arcade games, online games, retro gaming">
+  
+  <!-- Open Graph Tags -->
+  <meta property="og:title" content="Play Games - Pixel Palace Arcade Bar">
+  <meta property="og:description" content="Play Space Invaders and compete for high scores at Pixel Palace Arcade Bar!">
+  <meta property="og:type" content="website">
+  
+  <!-- Title -->
+  <title>Play Games - Pixel Palace Arcade Bar</title>
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .game-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .game-hud {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-md);
+      padding: var(--spacing-md);
+      background: var(--bg-card);
+      border: 2px solid var(--neon-purple);
+      border-radius: var(--radius-md);
+      backdrop-filter: blur(10px);
+    }
+
+    .score-display {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      color: var(--neon-yellow);
+    }
+
+    .high-score-display {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      color: var(--neon-pink);
+    }
+
+    .game-controls {
+      display: flex;
+      gap: var(--spacing-sm);
+      flex-wrap: wrap;
+    }
+
+    #gameCanvas {
+      display: block;
+      width: 100%;
+      max-width: 800px;
+      height: auto;
+      aspect-ratio: 4 / 3;
+      margin: 0 auto var(--spacing-md);
+      background: linear-gradient(#001028, #000814);
+      border: 3px solid var(--neon-blue);
+      border-radius: var(--radius-md);
+      box-shadow: var(--glow-blue), var(--shadow-lg);
+      cursor: crosshair;
+    }
+
+    .game-message {
+      text-align: center;
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      margin-bottom: var(--spacing-md);
+      min-height: 30px;
+    }
+
+    .game-message.win {
+      color: var(--neon-green);
+      font-weight: 700;
+      text-shadow: var(--glow-green);
+    }
+
+    .game-message.lose {
+      color: var(--neon-pink);
+      font-weight: 700;
+      text-shadow: var(--glow-pink);
+    }
+
+    .game-instructions {
+      background: var(--bg-card);
+      border: 2px solid var(--neon-green);
+      border-radius: var(--radius-md);
+      padding: var(--spacing-md);
+      margin-top: var(--spacing-lg);
+    }
+
+    .game-instructions h3 {
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .game-instructions ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .game-instructions li {
+      padding: var(--spacing-xs) 0;
+      color: var(--text-secondary);
+    }
+
+    .game-instructions kbd {
+      display: inline-block;
+      padding: 2px 8px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--neon-blue);
+      border-radius: 3px;
+      font-family: var(--font-heading);
+      font-size: 0.9em;
+      color: var(--neon-blue);
+    }
+
+    @media (max-width: 768px) {
+      .game-hud {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .game-controls {
+        justify-content: center;
+      }
+
+      #gameCanvas {
+        border-width: 2px;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- Navigation -->
+  <nav class="main-nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Pixel Palace</a>
+      
+      <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="section">
+    <div class="container game-container">
+      <h1 class="text-center mb-lg">Space Invaders</h1>
+
+      <!-- Game HUD -->
+      <div class="game-hud">
+        <div>
+          <div class="score-display" id="score">Score: 0</div>
+          <div class="high-score-display" id="highScore">High Score: 0</div>
+        </div>
+        
+        <div class="game-controls">
+          <button id="pauseBtn" class="btn btn-secondary btn-small">
+            <span id="pauseText">Pause</span>
+          </button>
+          <button id="resetBtn" class="btn btn-primary btn-small">New Game</button>
+          <button id="muteBtn" class="btn btn-small" style="border-color: var(--neon-green); color: var(--neon-green);" aria-pressed="false">
+            🔊
+          </button>
+        </div>
+      </div>
+
+      <!-- Game Message -->
+      <div class="game-message" id="message">Destroy all the invaders!</div>
+
+      <!-- Game Canvas -->
+      <canvas id="gameCanvas" width="800" height="600" tabindex="0" aria-label="Space Invaders Game"></canvas>
+
+      <!-- Instructions -->
+      <div class="game-instructions">
+        <h3>🎮 How to Play</h3>
+        <ul>
+          <li><kbd>←</kbd> <kbd>→</kbd> or <kbd>A</kbd> <kbd>D</kbd> - Move your ship</li>
+          <li><kbd>Space</kbd> - Fire laser</li>
+          <li><kbd>P</kbd> - Pause/Resume game</li>
+          <li><kbd>M</kbd> - Mute/Unmute sound</li>
+        </ul>
+        <p style="margin-top: var(--spacing-sm); color: var(--text-muted); font-size: 0.9rem;">
+          💡 Tip: The enemies speed up as you destroy them. Stay sharp!
+        </p>
+      </div>
+
+      <!-- Additional Info -->
+      <div class="card mt-lg">
+        <h3>🏆 Leaderboard Challenge</h3>
+        <p>Your high score is saved locally in your browser. Beat your personal best and challenge your friends to do the same!</p>
+        <p style="margin-top: var(--spacing-sm);">
+          <strong>Current Session High Score:</strong> 
+          <span id="sessionHigh" style="color: var(--neon-yellow); font-family: var(--font-heading);">0</span>
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-content">
+      <p class="footer-text">&copy; 2025 Pixel Palace Arcade Bar. All rights reserved.</p>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/storage.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/game-module.js"></script>
+  <script src="js/analytics.js"></script>
+  <script>
+    // Game UI Controller
+    (function() {
+      'use strict';
+
+      const pauseBtn = document.getElementById('pauseBtn');
+      const pauseText = document.getElementById('pauseText');
+      const resetBtn = document.getElementById('resetBtn');
+      const muteBtn = document.getElementById('muteBtn');
+      const highScoreEl = document.getElementById('highScore');
+      const sessionHighEl = document.getElementById('sessionHigh');
+      const messageEl = document.getElementById('message');
+
+      let sessionHighScore = 0;
+
+      // Initialize game
+      SpaceInvadersGame.init('gameCanvas', 'score', 'message');
+
+      // Display stored high score
+      const storedHighScore = StorageManager.getHighScore();
+      if (highScoreEl) {
+        highScoreEl.textContent = `High Score: ${storedHighScore.toLocaleString()}`;
+      }
+
+      // Pause/Resume button
+      if (pauseBtn) {
+        pauseBtn.addEventListener('click', () => {
+          SpaceInvadersGame.togglePause();
+        });
+      }
+
+      // Reset button
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          SpaceInvadersGame.reset();
+          if (messageEl) {
+            messageEl.textContent = 'Destroy all the invaders!';
+            messageEl.className = 'game-message';
+          }
+          
+          // Track game restart
+          if (typeof window.trackEvent === 'function') {
+            window.trackEvent('game_restart', { game: 'space_invaders' });
+          }
+        });
+      }
+
+      // Mute button
+      if (muteBtn) {
+        muteBtn.addEventListener('click', () => {
+          SpaceInvadersGame.toggleMute();
+        });
+      }
+
+      // Listen for game events
+      window.addEventListener('gamePause', (e) => {
+        const isPaused = e.detail.paused;
+        if (pauseText) {
+          pauseText.textContent = isPaused ? 'Resume' : 'Pause';
+        }
+      });
+
+      window.addEventListener('gameMute', (e) => {
+        const isMuted = e.detail.muted;
+        if (muteBtn) {
+          muteBtn.textContent = isMuted ? '🔇' : '🔊';
+          muteBtn.setAttribute('aria-pressed', isMuted ? 'true' : 'false');
+        }
+      });
+
+      window.addEventListener('gameEnd', (e) => {
+        const { score, isWin, message } = e.detail;
+        
+        // Update session high score
+        if (score > sessionHighScore) {
+          sessionHighScore = score;
+          if (sessionHighEl) {
+            sessionHighEl.textContent = score.toLocaleString();
+          }
+        }
+
+        // Update stored high score display
+        const currentHighScore = StorageManager.getHighScore();
+        if (highScoreEl) {
+          highScoreEl.textContent = `High Score: ${currentHighScore.toLocaleString()}`;
+        }
+
+        // Style message based on outcome
+        if (messageEl) {
+          messageEl.className = isWin ? 'game-message win' : 'game-message lose';
+        }
+
+        // Track game completion
+        if (typeof window.trackEvent === 'function') {
+          window.trackEvent('game_complete', {
+            game: 'space_invaders',
+            score: score,
+            outcome: isWin ? 'win' : 'lose'
+          });
+        }
+      });
+
+      // Focus canvas on load
+      const canvas = document.getElementById('gameCanvas');
+      if (canvas) {
+        canvas.focus();
+      }
+    })();
+  </script>
+</body>
+</html>

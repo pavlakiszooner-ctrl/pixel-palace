@@ -1,0 +1,82 @@
+/* Basic layout and styling for the game */
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background: radial-gradient(circle at 20% 20%, #001022, #000814 60%);
+  color: #e6f0ff;
+}
+.container {
+  max-width: 820px;
+  margin: 32px auto;
+  text-align: center;
+}
+h1 {
+  margin: 8px 0 4px 0;
+}
+.hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+#gameCanvas {
+  background: linear-gradient(#001028, #000814);
+  border: 2px solid #0ea5a5;
+  display: block;
+  margin: 12px auto; /* add breathing room above & below so borders are visible */
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  outline: none; /* we'll manage focus styles in JS if needed */
+  max-width: 100%;
+  width: 800px;
+  height: auto; /* allow CSS scaling on small viewports */
+  max-height: calc(100vh - 200px);
+}
+#message {
+  font-size: 14px;
+  opacity: 0.9;
+  display: inline-block;
+  margin-bottom: 12px; /* space between HUD message and canvas */
+}
+
+/* Layout: simple canvas centering (instructions removed) */
+/* Instructions panel was removed per user request */
+
+/* Prevent vertical scrolling */
+html, body { overflow-y: hidden; }
+
+/* Responsive: stack on narrow screens */
+/* Responsive styles adjusted (instructions removed) */
+.credits {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #a3c4ff;
+}
+/* Game over / pause overlay */
+.overlay {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0,0,0,0.6);
+  padding: 16px 24px;
+  border-radius: 8px;
+  color: #fff;
+}
+
+/* New Game button shown in the HUD when the game ends */
+.new-game-btn {
+  display: inline-block;
+  margin-left: 12px;
+  margin-top: 8px; /* give it a little space from the HUD text */
+  padding: 6px 10px;
+  font-size: 14px;
+  background: #0ea5a5;
+  border: none;
+  color: #001018;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.new-game-btn:hover { opacity: 0.9; }
+.new-game-btn:focus { outline: 2px solid rgba(14,165,165,0.6); }
+
