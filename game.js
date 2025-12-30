@@ -349,5 +349,74 @@ window.addEventListener('keyup', (e) => {
 // Focus canvas for keyboard events when clicked
 canvas.addEventListener('click', () => canvas.focus());
 
+// --- Touch Controls for Mobile ---
+let touchStartX = null;
+let touchStartY = null;
+let isTouching = false;
+let lastTouchShootTime = 0;
+
+canvas.addEventListener('touchstart', (e) => {
+  e.preventDefault();
+  if (gameOver) return;
+  
+  const touch = e.touches[0];
+  const rect = canvas.getBoundingClientRect();
+  touchStartX = touch.clientX - rect.left;
+  touchStartY = touch.clientY - rect.top;
+  isTouching = true;
+
+  // Shoot on touch start (tap to shoot)
+  const now = Date.now();
+  if (now - lastTouchShootTime > 250) { // Prevent too rapid firing
+    input.shoot = true;
+    lastTouchShootTime = now;
+  }
+});
+
+canvas.addEventListener('touchmove', (e) => {
+  e.preventDefault();
+  if (gameOver || !isTouching) return;
+
+  const touch = e.touches[0];
+  const rect = canvas.getBoundingClientRect();
+  const touchX = touch.clientX - rect.left;
+  const touchY = touch.clientY - rect.top;
+
+  // Calculate horizontal drag distance
+  if (touchStartX !== null) {
+    const deltaX = touchX - touchStartX;
+    
+    // Move player based on drag direction and distance
+    // Scale the movement for smooth control
+    const movementSpeed = 0.8;
+    player.x += deltaX * movementSpeed;
+    
+    // Clamp player position
+    player.x = Math.max(0, Math.min(WIDTH - player.width, player.x));
+    
+    // Update touch start position for continuous movement
+    touchStartX = touchX;
+    touchStartY = touchY;
+  }
+});
+
+canvas.addEventListener('touchend', (e) => {
+  e.preventDefault();
+  isTouching = false;
+  touchStartX = null;
+  touchStartY = null;
+  input.left = false;
+  input.right = false;
+});
+
+canvas.addEventListener('touchcancel', (e) => {
+  e.preventDefault();
+  isTouching = false;
+  touchStartX = null;
+  touchStartY = null;
+  input.left = false;
+  input.right = false;
+});
+
 // Ensure the game starts with a message
 messageEl.textContent = 'Destroy all the invaders!';
